@@ -32,12 +32,14 @@ reliably. The local backend is managed by the preview command.
 ```bash
 bun install               # install dependencies
 bun convex dev --once     # codegen + push functions to the local deployment
-bun run smoke             # backend end-to-end test suite (see Testing)
-bun run dev               # start Vite (serves on 0.0.0.0:$PORT, default 5173)
+bun run dev               # start Vite + Convex (0.0.0.0:$PORT, default 5173)
+bun run smoke             # backend E2E suite — needs the backend running
 ```
 
 On Freebuff, the preview runs `bun convex dev --start 'bun run dev'` so the
-Convex local backend and the web app run together.
+Convex local backend and the web app run together. The smoke suite tests
+against that running backend (standalone alternative: keep
+`bun convex dev --once --start "bun scripts/smoke.ts"` up instead).
 
 ### Demo data
 
@@ -113,6 +115,7 @@ scripts/
 bun tsc -b --noEmit       # typecheck (app + backend + scripts)
 bun run smoke             # backend E2E: auth, CBT engine, timer, scoring,
                           # review, rotation, plan limits, security
+                          # (requires the local backend to be running)
 bun run build             # production build check (outputs dist/)
 ```
 

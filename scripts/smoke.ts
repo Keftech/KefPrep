@@ -1,10 +1,9 @@
 /**
  * KefPrep backend end-to-end smoke test.
  *
- * Run via:  bun run smoke
- * (package.json runs it as `convex dev --once --start "bun scripts/smoke.ts"`,
- *  which pushes functions, boots the local backend, runs this file against it,
- *  and exits non-zero on failure.)
+ * Run via:  bun run smoke   (requires the local backend to be running —
+ * the Freebuff preview does this; standalone: `bun convex dev --once --start
+ * "bun scripts/smoke.ts"` boots one for the duration of the test).
  *
  * Covers: seed, signup/login, invalid credentials, session guards, enrolment,
  * plan limits, CBT start/resume (no restart), server timer, answer recording,
@@ -22,6 +21,25 @@ if (!url) {
   console.error("FATAL: VITE_CONVEX_URL is not set (check .env.local)");
   process.exit(2);
 }
+
+// The backend must already be up (preview or a running `convex dev`).
+// Probing it first gives a clear error instead of confusing timeouts.
+try {
+  const probe = await fetch(new URL("/version", url), {
+    signal: AbortSignal.timeout(4000),
+  });
+  if (!probe.ok) throw new Error(`status ${probe.status}`);
+} catch (e) {
+  console.error(
+    "FATAL: Convex local backend is not reachable at " +
+      new URL(url).origin +
+      ".\nStart the preview (freebuff-preview start) or run:\n" +
+      '  bun convex dev --once --start "bun scripts/smoke.ts"\n' +
+      `Detail: ${String(e)}`,
+  );
+  process.exit(2);
+}
+
 const client = new ConvexHttpClient(url);
 
 let passed = 0;

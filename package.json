@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
-    "smoke": "convex dev --once --start \"bun scripts/smoke.ts\""
+    "smoke": "bun scripts/smoke.ts"
   },
   "dependencies": {
     "clsx": "^2.1.1",
