@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  /* Exam-hall palette: deep ink + warm paper + emerald + gold */
+  --color-ink-900: #0a1420;
+  --color-ink-800: #101d2e;
+  --color-ink-700: #1a2c42;
+  --color-ink-500: #3b4d63;
+  --color-paper: #f6f4ee;
+  --color-paper-2: #edeae0;
+  --color-surface: #ffffff;
+  --color-brand-700: #0a5c46;
+  --color-brand-600: #0e7a5f;
+  --color-brand-500: #12987a;
+  --color-brand-100: #d9f2ea;
+  --color-gold-600: #b4801f;
+  --color-gold-500: #d9a441;
+  --color-gold-100: #f7ecd3;
+  --color-danger-700: #a02c1f;
+  --color-danger-600: #c0392b;
+  --color-danger-100: #f9e2df;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+/* Comfortable tap targets on phones */
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
